@@ -4,7 +4,7 @@ local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "AutoMenu"
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
--- Khung chính (đã tăng chiều cao để chứa thêm 2 nút)
+-- Khung chính
 local frame = Instance.new("Frame")
 frame.Size = UDim2.new(0, 220, 0, 340)
 frame.Position = UDim2.new(0.5, -110, 0.5, -170)
@@ -80,7 +80,7 @@ teleportButton.Font = Enum.Font.Gotham
 teleportButton.TextSize = 14
 teleportButton.Parent = frame
 
--- NÚT AUTO TELEPORT CHAOS (đến workspace.Enemies.Chaos.Enemy.EnemyLocation)
+-- Nút Auto Teleport Chaos (60s)
 local chaosButton = Instance.new("TextButton")
 chaosButton.Size = UDim2.new(0.9, 0, 0, 30)
 chaosButton.Position = UDim2.new(0.05, 0, 0.48, 0)
@@ -91,27 +91,27 @@ chaosButton.Font = Enum.Font.Gotham
 chaosButton.TextSize = 14
 chaosButton.Parent = frame
 
--- NÚT AUTO TELEPORT CURSE ORB (đến workspace.CombatFolder.secret_player1225.CurseOrb_*)
-local curseButton = Instance.new("TextButton")
-curseButton.Size = UDim2.new(0.9, 0, 0, 30)
-curseButton.Position = UDim2.new(0.05, 0, 0.56, 0)
-curseButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-curseButton.Text = "Auto Teleport Curse Orb: OFF"
-curseButton.TextColor3 = Color3.new(1, 1, 1)
-curseButton.Font = Enum.Font.Gotham
-curseButton.TextSize = 14
-curseButton.Parent = frame
+-- Nút Auto Teleport All Orbs
+local orbButton = Instance.new("TextButton")
+orbButton.Size = UDim2.new(0.9, 0, 0, 30)
+orbButton.Position = UDim2.new(0.05, 0, 0.56, 0)
+orbButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+orbButton.Text = "Auto Teleport All Orbs: OFF"
+orbButton.TextColor3 = Color3.new(1, 1, 1)
+orbButton.Font = Enum.Font.Gotham
+orbButton.TextSize = 14
+orbButton.Parent = frame
 
--- Biến trạng thái (thêm 2 biến mới)
+-- Biến trạng thái
 local buyRunning = false
 local useRunning1 = false
 local useRunning2 = false
 local useRunning3 = false
 local teleportRunning = false
 local chaosRunning = false
-local curseRunning = false
+local orbRunning = false
 
--- Hàm dừng tất cả (cập nhật thêm chaos và curse)
+-- Hàm dừng tất cả
 local function stopAll()
     buyRunning = false
     useRunning1 = false
@@ -119,7 +119,7 @@ local function stopAll()
     useRunning3 = false
     teleportRunning = false
     chaosRunning = false
-    curseRunning = false
+    orbRunning = false
     
     buyButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
     buyButton.Text = "Auto Buy Pizza: OFF"
@@ -133,11 +133,11 @@ local function stopAll()
     teleportButton.Text = "Auto Teleport EternalOrb: OFF"
     chaosButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
     chaosButton.Text = "Auto Teleport Chaos: OFF"
-    curseButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-    curseButton.Text = "Auto Teleport Curse Orb: OFF"
+    orbButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    orbButton.Text = "Auto Teleport All Orbs: OFF"
 end
 
--- Xử lý Auto Buy Pizza
+-- Xử lý Auto Buy Pizza (giữ nguyên)
 buyButton.MouseButton1Click:Connect(function()
     buyRunning = not buyRunning
     if buyRunning then
@@ -161,7 +161,7 @@ buyButton.MouseButton1Click:Connect(function()
     end
 end)
 
--- Xử lý Auto Use Slot 1
+-- Các nút Auto Use Slot 1,2,3 (giữ nguyên như cũ)
 useButton1.MouseButton1Click:Connect(function()
     useRunning1 = not useRunning1
     if useRunning1 then
@@ -182,7 +182,6 @@ useButton1.MouseButton1Click:Connect(function()
     end
 end)
 
--- Xử lý Auto Use Slot 2
 useButton2.MouseButton1Click:Connect(function()
     useRunning2 = not useRunning2
     if useRunning2 then
@@ -203,7 +202,6 @@ useButton2.MouseButton1Click:Connect(function()
     end
 end)
 
--- Xử lý Auto Use Slot 3
 useButton3.MouseButton1Click:Connect(function()
     useRunning3 = not useRunning3
     if useRunning3 then
@@ -224,7 +222,7 @@ useButton3.MouseButton1Click:Connect(function()
     end
 end)
 
--- Xử lý Auto Teleport EternalOrb
+-- Auto Teleport EternalOrb (giữ nguyên)
 teleportButton.MouseButton1Click:Connect(function()
     teleportRunning = not teleportRunning
     if teleportRunning then
@@ -239,7 +237,6 @@ teleportButton.MouseButton1Click:Connect(function()
                     if secretPlayer then
                         local eternalOrb = secretPlayer:FindFirstChild("EternalOrb")
                         if eternalOrb then
-                            -- Lấy tất cả các con là BasePart
                             local parts = {}
                             for _, child in ipairs(eternalOrb:GetChildren()) do
                                 if child:IsA("BasePart") then
@@ -266,7 +263,7 @@ teleportButton.MouseButton1Click:Connect(function()
                         end
                     end
                 end
-                task.wait(0.0001)  -- spam teleport
+                task.wait(0.0001)
             end
         end)
     else
@@ -275,7 +272,7 @@ teleportButton.MouseButton1Click:Connect(function()
     end
 end)
 
--- XỬ LÝ AUTO TELEPORT CHAOS
+-- Auto Teleport Chaos (giữ nguyên)
 chaosButton.MouseButton1Click:Connect(function()
     chaosRunning = not chaosRunning
     if chaosRunning then
@@ -288,7 +285,6 @@ chaosButton.MouseButton1Click:Connect(function()
                 if enemies then
                     local chaos = enemies:FindFirstChild("Chaos")
                     if chaos then
-                        -- Lấy danh sách các Enemy con
                         local enemyList = chaos:GetChildren()
                         local locations = {}
                         for _, enemy in ipairs(enemyList) do
@@ -312,7 +308,7 @@ chaosButton.MouseButton1Click:Connect(function()
                         end
                     end
                 end
-                task.wait(60)  -- spam teleport
+                task.wait(60)
             end
         end)
     else
@@ -321,36 +317,38 @@ chaosButton.MouseButton1Click:Connect(function()
     end
 end)
 
--- XỬ LÝ AUTO TELEPORT CURSE ORB (tất cả các CurseOrb)
-curseButton.MouseButton1Click:Connect(function()
-    curseRunning = not curseRunning
-    if curseRunning then
-        curseButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
-        curseButton.Text = "Auto Teleport Curse Orb: ON"
+-- ==================== PHẦN ĐÃ SỬA: AUTO TELEPORT ALL ORBS ====================
+orbButton.MouseButton1Click:Connect(function()
+    orbRunning = not orbRunning
+    if orbRunning then
+        orbButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+        orbButton.Text = "Auto Teleport All Orbs: ON"
         task.spawn(function()
             local orbIndex = 1
-            while curseRunning do
+            while orbRunning do
                 local combatFolder = workspace:FindFirstChild("CombatFolder")
                 if combatFolder then
                     local secretPlayer = combatFolder:FindFirstChild("secret_player1225")
                     if secretPlayer then
-                        -- Lấy tất cả các part có tên chứa "CurseOrb"
-                        local curseOrbs = {}
-                        for _, child in ipairs(secretPlayer:GetChildren()) do
-                            if child:IsA("BasePart") and child.Name:find("CurseOrb") then
-                                table.insert(curseOrbs, child)
-                            end
-                        end
-                        -- Nếu không tìm thấy, thử dùng CurseOrb_4 cụ thể
-                        if #curseOrbs == 0 then
-                            local orb4 = secretPlayer:FindFirstChild("CurseOrb_4")
-                            if orb4 and orb4:IsA("BasePart") then
-                                curseOrbs = { orb4 }
+                        -- Thu thập TẤT CẢ các Orb (giống cấu trúc EternalOrb)
+                        local orbs = {}
+                        for _, model in ipairs(secretPlayer:GetChildren()) do
+                            if model.Name:find("Orb") then
+                                -- Lấy tất cả BasePart bên trong mỗi Orb
+                                for _, child in ipairs(model:GetChildren()) do
+                                    if child:IsA("BasePart") then
+                                        table.insert(orbs, child)
+                                    end
+                                end
+                                -- Nếu chính model là BasePart thì thêm luôn
+                                if model:IsA("BasePart") then
+                                    table.insert(orbs, model)
+                                end
                             end
                         end
 
-                        if #curseOrbs > 0 then
-                            local target = curseOrbs[orbIndex]
+                        if #orbs > 0 then
+                            local target = orbs[orbIndex]
                             if target then
                                 local character = player.Character
                                 if character and character:FindFirstChild("HumanoidRootPart") then
@@ -358,18 +356,18 @@ curseButton.MouseButton1Click:Connect(function()
                                 end
                             end
                             orbIndex = orbIndex + 1
-                            if orbIndex > #curseOrbs then
+                            if orbIndex > #orbs then
                                 orbIndex = 1
                             end
                         end
                     end
                 end
-                task.wait(0.0001)  -- spam teleport
+                task.wait(0.00000000001)  -- spam teleport
             end
         end)
     else
-        curseButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-        curseButton.Text = "Auto Teleport Curse Orb: OFF"
+        orbButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        orbButton.Text = "Auto Teleport All Orbs: OFF"
     end
 end)
 
