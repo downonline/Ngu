@@ -362,7 +362,7 @@ orbButton.MouseButton1Click:Connect(function()
                         end
                     end
                 end
-                task.wait(0.00000000001)  -- spam teleport
+                task.wait(0.00000000000000000000000000000001)  -- spam teleport
             end
         end)
     else
