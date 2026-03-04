@@ -2,6 +2,7 @@
 local player = game.Players.LocalPlayer
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "AutoMenu"
+screenGui.ResetOnSpawn = false -- GUI sẽ KHÔNG bị mất khi die/reset
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
 -- Khung chính
@@ -137,7 +138,7 @@ local function stopAll()
     orbButton.Text = "Auto Teleport All Orbs: OFF"
 end
 
--- Xử lý Auto Buy Pizza (giữ nguyên)
+-- Xử lý Auto Buy Pizza
 buyButton.MouseButton1Click:Connect(function()
     buyRunning = not buyRunning
     if buyRunning then
@@ -161,7 +162,7 @@ buyButton.MouseButton1Click:Connect(function()
     end
 end)
 
--- Các nút Auto Use Slot 1,2,3 (giữ nguyên như cũ)
+-- Các nút Auto Use Slot
 useButton1.MouseButton1Click:Connect(function()
     useRunning1 = not useRunning1
     if useRunning1 then
@@ -222,7 +223,7 @@ useButton3.MouseButton1Click:Connect(function()
     end
 end)
 
--- Auto Teleport EternalOrb (giữ nguyên)
+-- Auto Teleport EternalOrb
 teleportButton.MouseButton1Click:Connect(function()
     teleportRunning = not teleportRunning
     if teleportRunning then
@@ -272,7 +273,7 @@ teleportButton.MouseButton1Click:Connect(function()
     end
 end)
 
--- Auto Teleport Chaos (giữ nguyên)
+-- Auto Teleport Chaos
 chaosButton.MouseButton1Click:Connect(function()
     chaosRunning = not chaosRunning
     if chaosRunning then
@@ -317,7 +318,7 @@ chaosButton.MouseButton1Click:Connect(function()
     end
 end)
 
--- ==================== PHẦN ĐÃ SỬA: AUTO TELEPORT ALL ORBS ====================
+-- Auto Teleport All Orbs
 orbButton.MouseButton1Click:Connect(function()
     orbRunning = not orbRunning
     if orbRunning then
@@ -330,17 +331,14 @@ orbButton.MouseButton1Click:Connect(function()
                 if combatFolder then
                     local secretPlayer = combatFolder:FindFirstChild("secret_player1225")
                     if secretPlayer then
-                        -- Thu thập TẤT CẢ các Orb (giống cấu trúc EternalOrb)
                         local orbs = {}
                         for _, model in ipairs(secretPlayer:GetChildren()) do
                             if model.Name:find("Orb") then
-                                -- Lấy tất cả BasePart bên trong mỗi Orb
                                 for _, child in ipairs(model:GetChildren()) do
                                     if child:IsA("BasePart") then
                                         table.insert(orbs, child)
                                     end
                                 end
-                                -- Nếu chính model là BasePart thì thêm luôn
                                 if model:IsA("BasePart") then
                                     table.insert(orbs, model)
                                 end
@@ -362,7 +360,7 @@ orbButton.MouseButton1Click:Connect(function()
                         end
                     end
                 end
-                task.wait(0.00000000000000000000000000000001)  -- spam teleport
+                task.wait(0.0001)
             end
         end)
     else
